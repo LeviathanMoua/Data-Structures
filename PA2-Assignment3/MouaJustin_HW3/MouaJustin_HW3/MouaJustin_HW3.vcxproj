@@ -129,6 +129,15 @@
   <ItemGroup>
     <ClCompile Include="MouaJustin_HW3.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Given\CS3353_Lecture_08_Stack_Q_Code_Spring_2024\genArrayQueue.h" />
+    <ClInclude Include="..\..\Given\CS3353_Lecture_08_Stack_Q_Code_Spring_2024\genListStack.h" />
+    <ClInclude Include="..\..\Given\CS3353_Lecture_08_Stack_Q_Code_Spring_2024\genQueue.h" />
+    <ClInclude Include="..\..\Given\CS3353_Lecture_08_Stack_Q_Code_Spring_2024\genStack.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
