@@ -1,4 +1,4 @@
-D:\GitHub\Data-Structures\PA2-Assignment3/*
+/*
 Program name : MouaJustin_Homework3.cpp
 Author       : Justin Moua
 Professor    : Pu Cong
@@ -21,9 +21,39 @@ int main()
 
         std::string strUsrInp; //Used to store an entire line of input from the user.
 
+        //Take user's input
         std::cout << "====\nMenu\n====\n\nBinary (0), Octal (1), Hexadecimal (2)\nExit Program (3)\n\nChoose: ";
         std::getline(std::cin, strUsrInp);
         std::cout << std::endl;
+
+        //Binary Conversion
+        if (strUsrInp == "0") {
+            std::cout << "Performing Binary Conversion! (This is just a spacer. Delete after implementing the respective function)";
+            std::cout << std::endl << std::endl;
+        }
+        
+        //Octal Conversion
+        else if (strUsrInp == "1") {
+            std::cout << "Performing Octal Conversion! (This is just a spacer. Delete after implementing the respective function)";
+            std::cout << std::endl << std::endl;
+        }
+
+        //Hexadecimal Conversion
+        else if (strUsrInp == "2") {
+            std::cout << "Performing Hexadecimal Conversion! (This is just a spacer. Delete after implementing the respective function)";
+            std::cout << std::endl << std::endl;
+        }
+
+        //Quit
+        else if (strUsrInp == "3") {
+            break;
+        }
+
+        //Invalid Input
+        else {
+            std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! You can only enter numbers from 0-3.";
+            std::cout << std::endl << std::endl;
+        }
 
     }
 
