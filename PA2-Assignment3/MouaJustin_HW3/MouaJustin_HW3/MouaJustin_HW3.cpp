@@ -3,54 +3,45 @@ Program name : MouaJustin_Homework3.cpp
 Author       : Justin Moua
 Professor    : Pu Cong
 Course       : CS 3353 | Data Structures and Algorithms
-Date         : 4 Mayebruary 2024
+Date         : 4 May 2024
 Description  : Refer to instructions provided by professor.
 */
 
 #include <iostream>
 #include <string>
-
-//**********************  genListStack.h  *************************
-//     generic stack defined as a doubly linked list
-
-/*
-#ifndef LL_STACK
-#define LL_STACK
-
 #include <list>
 
+//Generic stack, primarily will be using STRING in main func.
 template<class T>
 class LLStack {
 public:
     LLStack() {
     }
     void clear() {
-        lst.clear();
+        genList.clear();
     }
     bool isEmpty() const {
-        return lst.empty();
+        return genList.empty();
     }
     T& topEl() {
-        return lst.back();
+        return genList.back();
     }
     T pop() {
-        T el = lst.back();
-        lst.pop_back();
+        T el = genList.back();
+        genList.pop_back();
         return el;
     }
     void push(const T& el) {
-        lst.push_back(el);
+        genList.push_back(el);
     }
 private:
-    list<T> lst;
+    std::list<T> genList;
 };
 
-#endif
-*/
 
 int main(){
 
-    //LLStack<int> tempTest;
+    LLStack<std::string> strLLStack;
 
 
     std::cout << "\n==============================================================\n\nAssignment: Homework #3\nAuthor of Program: Justin moua\nProfessor: Pu Cong\nCourse: CS 3353 | Data Structures and Algorithms\n\n==============================================================\n\n";
@@ -77,6 +68,7 @@ int main(){
 
         bool boolWhiteSpcDetec = false; //set to false if there is no white space. If there is white space, then it is true. 
         int intWhiteSpcLoc = -1; // if < 0, then there is no white space. >= 0 means there is white space in user's input. 
+
         //If input is not empty
         if (strUsrInp.length() > 0) {
             //Parse through array and check if there is a whitespace
@@ -87,7 +79,7 @@ int main(){
             }
 
             //QUITS THE PROGRAM 
-            if (intWhiteSpcLoc == -1 && strUsrInp.length() == 2 && strUsrInp == "12") {
+            if (intWhiteSpcLoc == -1 && strUsrInp.length() == 1 && strUsrInp == "3") {
                 std::cout << "Click enter to quit the program.";
                 std::cout << std::endl;
                 break;
@@ -133,73 +125,91 @@ int main(){
         //Binary Conversion
         if (strLHSUsrInp == "0") {
 
-            //this works but note that it is in reverse. Need to concatonate. 
-            //This converts decimal to binary. 
+            //push into stack
             while (intRHSUsrInp != 0) {
-                std::cout << intRHSUsrInp % 2;
-
+                //std::cout << intRHSUsrInp % 2
+                //Creates temporary string to grab the modulos result and push into the stack.
+                std::string strTemp = std::to_string(intRHSUsrInp % 2);
+                strLLStack.push(strTemp);
 
                 intRHSUsrInp = intRHSUsrInp / 2;
-
             }
 
+            //pops the stack
+            while (strLLStack.isEmpty() == false) {
+                std::cout << strLLStack.pop() << " ";
+            }
             std::cout << std::endl << std::endl;
         }
         
         //Octal Conversion
         else if (strLHSUsrInp == "1") {
 
+            //push into stack
             while (intRHSUsrInp != 0) {
-                std::cout << intRHSUsrInp % 8;
-
+                //std::cout << intRHSUsrInp % 8;
+                //Creates temporary string to grab the modulos result and push into the stack.
+                std::string strTemp = std::to_string(intRHSUsrInp % 8);
+                strLLStack.push(strTemp);
 
                 intRHSUsrInp = intRHSUsrInp / 8;
 
             }
-
+            //pop stack
+            while (strLLStack.isEmpty() == false) {
+                std::cout << strLLStack.pop() << " ";
+            }
             std::cout << std::endl << std::endl;
         }
 
         //Hexadecimal Conversion~~
         else if (strLHSUsrInp == "2") {
 
+            //PUSH
             while (intRHSUsrInp != 0) {
 
-
+                //First 6 if statements checks for chars A-F since they are equivalent to the numbers resulted from performing a modulous. 
                 if (intRHSUsrInp % 16 == 10) {
-                    std::cout << "A";
+                    strLLStack.push("A");
+                    //std::cout << "A";
                 }
                 else if (intRHSUsrInp % 16 == 11) {
-                    std::cout << "B";
+                    strLLStack.push("B");
+                    //std::cout << "B";
                 }
                 else if (intRHSUsrInp % 16 == 12) {
-                    std::cout << "C";
+                    strLLStack.push("C");
+                    //std::cout << "C";
                 }
                 else if (intRHSUsrInp % 16 == 13) {
-                    std::cout << "D";
+                    strLLStack.push("D");
+                    //std::cout << "D";
                 }
                 else if (intRHSUsrInp % 16 == 14) {
-                    std::cout << "E";
+                    strLLStack.push("E");
+                    //std::cout << "E";
                 }
                 else if (intRHSUsrInp % 16 == 15) {
-                    std::cout << "F";
+                    strLLStack.push("F");
+                    //std::cout << "F";
                 }
+                //Otherwise if 0-9, push no need to push any letters. 
                 else {
-                    std::cout << intRHSUsrInp % 16;
+                    std::string strTemp = std::to_string(intRHSUsrInp % 16);
+                    strLLStack.push(strTemp);
                 }
 
                 intRHSUsrInp = intRHSUsrInp / 16;
 
             }
 
+            //POP
+            while (strLLStack.isEmpty() == false) {
+                std::cout << strLLStack.pop() << " ";
+            }
+
             std::cout << std::endl << std::endl;
         }
-
-        //Quit
-        else if (strLHSUsrInp == "3") {
-            break;
-        }
-
         //Invalid Input
         else {
             std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! You can only enter numbers from 0-3.";
