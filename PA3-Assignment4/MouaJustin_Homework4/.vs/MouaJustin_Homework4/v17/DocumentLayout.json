@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\GitHub\\Data-Structures\\PA3-Assignment4\\MouaJustin_Homework4\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A1304F32-F872-47AA-952D-8656EED4E6A0}|MouaJustin_Homework4\\MouaJustin_Homework4.vcxproj|F:\\GitHub\\Data-Structures\\PA3-Assignment4\\MouaJustin_Homework4\\MouaJustin_Homework4\\MouaJustin_Homework4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A1304F32-F872-47AA-952D-8656EED4E6A0}|MouaJustin_Homework4\\MouaJustin_Homework4.vcxproj|solutionrelative:MouaJustin_Homework4\\MouaJustin_Homework4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MouaJustin_Homework4.cpp",
+              "DocumentMoniker": "F:\\GitHub\\Data-Structures\\PA3-Assignment4\\MouaJustin_Homework4\\MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
+              "RelativeDocumentMoniker": "MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
+              "ToolTip": "F:\\GitHub\\Data-Structures\\PA3-Assignment4\\MouaJustin_Homework4\\MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
+              "RelativeToolTip": "MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
+              "ViewState": "AQIAAFAAAAAAAAAAAAAAAGIAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-06T20:35:21.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
