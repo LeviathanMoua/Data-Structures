@@ -3,7 +3,7 @@ Program name : MouaJustin_Homework4.cpp
 Author       : Justin Moua
 Professor    : Pu Cong
 Course       : CS 3353 | Data Structures and Algorithms
-Due Date         : 25 Mar. 2024
+Due Date     : 25 Mar. 2024
 Description  : Refer to instructions provided by professor.
 */
 
@@ -12,7 +12,7 @@ Description  : Refer to instructions provided by professor.
 
 int main() {
 
-
+    int intRows = 0, intCols = 0;
     std::cout << "\n==============================================================\n\nAssignment: Homework #4\nAuthor of Program: Justin moua\nProfessor: Pu Cong\nCourse: CS 3353 | Data Structures and Algorithms\n\n==============================================================\n\n";
 
     bool boolQuit = true;
@@ -90,28 +90,58 @@ int main() {
 
         //=================TAKING USER INPUT ENDS HERE=================TAKING USER INPUT ENDS HERE=================TAKING USER INPUT ENDS HERE=================
 
-        int intRHSUsrInp = std::stoi(strRHSUsrInp);
-        //Binary Conversion
-        if (strLHSUsrInp == "0") {
+        //int intRHSUsrInp = std::stoi(strRHSUsrInp);
+        //Horz. Axis
+        if (strLHSUsrInp == "0" && intWhiteSpcLoc >= 0) {
 
             std::cout << "Performing Horizontal Axis option...";
+            std::cout << std::endl << std::endl;
+
+            //std::cout << "Enter the number of rows: "; //I don't actually need this. strRHSUsrInp already has their input. 
+            intRows = std::stoi(strRHSUsrInp);
 
             std::cout << std::endl << std::endl;
         }
 
-        //Octal Conversion
-        else if (strLHSUsrInp == "1") {
+        //Vert. Axis
+        else if (strLHSUsrInp == "1" && intWhiteSpcLoc >= 0) {
 
             std::cout << "Performing Vertical Axis option...";
+            std::cout << std::endl << std::endl;
+
+            //std::cout << "Enter the number of columns: "; //I don't actually need this. strRHSUsrInp already has their input. 
+            intCols = std::stoi(strRHSUsrInp);
 
             std::cout << std::endl << std::endl;
         }
 
-        //Hexadecimal Conversion~~
-        else if (strLHSUsrInp == "2") {
+        //Start Discovery (For now as of 11 Mar. 2024 2:58 PM, it only creates a matrix)
+        else if (strLHSUsrInp == "2" && intWhiteSpcLoc == -1) {
 
             std::cout << "Performing Start Discovery...";
+            std::cout << std::endl;
 
+            //Creates a pointer to pointer to integer
+            //(pointer points to a pointer that points to an integer.)
+            int** a2d = new int* [intRows]; //Memory allocation for rows
+
+            for (int j = 0; j < intRows; j++) {
+                a2d[j] = new int[intCols]; //Memory allocation for columns
+            }
+
+            for (int i = 0; i < intRows; i++) {
+                for (int j = 0; j < intCols; j++) {
+                    a2d[i][j] = (i * intCols + j) + 1;
+                    //a2d[i][j] = (i + i) + (j+1);
+                }
+            }
+
+            for (int i = 0; i < intRows; i++) {
+                for (int j = 0; j < intCols; j++) {
+                    std::cout << a2d[i][j] << " ";
+                }
+                std::cout << std::endl;
+            }
             std::cout << std::endl << std::endl;
         }
         //Invalid Input
@@ -119,6 +149,12 @@ int main() {
             std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! You can only enter numbers from 0-3.";
             std::cout << std::endl << std::endl;
         }
+
+
+
+        //Testing to see if intRows and intCols are global. 
+        //std::cout << "Rows: " << intRows << std::endl << "Columns: " << intCols;
+        //std::cout << std::endl;
 
     }
 
