@@ -9,6 +9,40 @@ Description  : Refer to instructions provided by professor.
 
 #include <iostream>
 #include <string>
+#include <stack>
+//#include <queue> //Ended up not needing this. 
+
+
+/*Failed attempt at searching through.
+void vdFnSearchDiscovery1(int** arr, int m, int n)
+{   //i = rows
+    //j = col
+    //
+
+    int intMaxCellSearch = (m + n) - 1;
+    int intMinCellSearch;
+
+    if (m > n)
+        intMinCellSearch = m;
+    else if (n > m)
+        intMinCellSearch = n;
+    else //This is if m = n
+        intMinCellSearch = m;
+
+    for (int i = 0; i < m; i++) {
+        std::cout << arr[i][0] << " ";
+        if (i == m - 1) {
+            for (int j = 1; j < n; j++)
+                std::cout << arr[i][j] << " ";
+        }
+    }
+
+
+}
+*/
+
+
+void vdFnSearchDiscovery(int** Pt2Pt2Int_2DArr, std::stack<int>& stckIntDiscPath, int m, int n, int intMaxRows, int intMaxCols);
 
 int main() {
 
@@ -20,12 +54,9 @@ int main() {
 
         std::string strUsrInp; //Used to store an entire line of input from the user.
         int intTest = 0;
-        std::string strLHSUsrInp; //Stores the left hand side of input 
-        std::string strRHSUsrInp;
+        std::string strLHSUsrInp; //Stores the left hand side of input.
+        std::string strRHSUsrInp; //Stores the right hand side of input. 
 
-        //===========IMPORTANT=============IMPORTANT=============IMPORTANT==========
-        //CREATE AN INPUT THAT GRABS LHS AND RHS
-        //===========IMPORTANT=============IMPORTANT=============IMPORTANT==========
 
         //Take user's input
         std::cout << "====\nMenu\n====\n\nHorizontal Axis (0), Vertical Axis (1), Start Discovery (2)\nExit Program (3)\n\nChoose: ";
@@ -121,6 +152,7 @@ int main() {
             std::cout << "Performing Start Discovery...";
             std::cout << std::endl;
 
+            //=========================M x N ARRAY CREATION================M x N ARRAY CREATION================
             //Creates a pointer to pointer to integer
             //(pointer points to a pointer that points to an integer.)
             int** a2d = new int* [intRows]; //Memory allocation for rows
@@ -129,19 +161,37 @@ int main() {
                 a2d[j] = new int[intCols]; //Memory allocation for columns
             }
 
+            //Creation of a m x n matrix
             for (int i = 0; i < intRows; i++) {
                 for (int j = 0; j < intCols; j++) {
                     a2d[i][j] = (i * intCols + j) + 1;
-                    //a2d[i][j] = (i + i) + (j+1);
+                    //a2d[i][j] = (i + i) + (j+1); Failed Attempt.
                 }
             }
+            //=========================M x N ARRAY CREATION================M x N ARRAY CREATION================
 
+            //=========================SEARCH DISCOVERY=======================SEARCH DISCOVERY=======================
+            std::stack<int> stckIntDiscPath; //This works better instead of putting into function because it will be manipulated outside the scope of it
+
+            //Parameters are (2D array, discovery path, current m location, current n location, max rows, max cols)
+            vdFnSearchDiscovery(a2d, stckIntDiscPath, 0, 0, intRows, intCols); //This function outputs the array instead. As opposed to the test one below. 
+            //=========================SEARCH DISCOVERY=======================SEARCH DISCOVERY=======================
+
+
+            //Test if array is outputted correctly no matter the m x n dimensions.
+
+            /*
+            //Outputs string for debugging
             for (int i = 0; i < intRows; i++) {
                 for (int j = 0; j < intCols; j++) {
                     std::cout << a2d[i][j] << " ";
                 }
                 std::cout << std::endl;
             }
+            */
+
+
+
             std::cout << std::endl << std::endl;
         }
         //Invalid Input
@@ -149,8 +199,6 @@ int main() {
             std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! You can only enter numbers from 0-3.";
             std::cout << std::endl << std::endl;
         }
-
-
 
         //Testing to see if intRows and intCols are global. 
         //std::cout << "Rows: " << intRows << std::endl << "Columns: " << intCols;
@@ -161,3 +209,54 @@ int main() {
     std::cout << std::endl << std::endl;
     return 0;
 }
+
+
+void vdFnSearchDiscovery(int** Pt2Pt2Int_2DArr, std::stack<int>& stckIntDiscPath, int m, int n, int intMaxRows, int intMaxCols)
+{
+
+
+    stckIntDiscPath.push(Pt2Pt2Int_2DArr[m][n]); //Everytime the function is invoked, we want to push it into the stack from the main funciton. 
+
+    //Depending on if the function being invoked has reached BOTTOM RIGHT no matter what matrices is given, 
+    //it will then output the search discovery by creating a temporary stack and reversing it. 
+    if (m == intMaxRows - 1 && n == intMaxCols - 1) {
+        std::stack<int> stckTemp = stckIntDiscPath; //Created this since I don't want to get rid of what is actually in the stack we are using
+        std::stack<int> stckRevTemp; //This should reverse stack I think. 
+        //std::queue<int> qTemp; //Failed attempt at reversing stack. 
+
+        //Reverses stack
+        while (!stckTemp.empty()) {
+            stckRevTemp.push(stckTemp.top()); //.top() instead of .pop() since .pop() doesn't go into .push(). .pop() doesn't return anything I think. 
+            stckTemp.pop();
+        }
+
+
+        while (!stckRevTemp.empty()) {
+            std::cout << stckRevTemp.top() << " ";
+            stckRevTemp.pop();
+        }
+
+        std::cout << std::endl;
+    }
+
+
+    else {
+        if (m + 1 < intMaxRows)
+            //Downward path. Checks to see if we have reached the bottom. If so, move onwards to move right. 
+            //In other cases however when the function goes back, it will just move right instead of reaching the bottom. 
+            vdFnSearchDiscovery(Pt2Pt2Int_2DArr, stckIntDiscPath, m + 1, n, intMaxRows, intMaxCols);
+
+        if (n + 1 < intMaxCols)
+            //Rightward path movement. Checks to see if we have reached the rightmost part of the matrix. 
+            //A bit of same reasoning as the one above. 
+            vdFnSearchDiscovery(Pt2Pt2Int_2DArr, stckIntDiscPath, m, n + 1, intMaxRows, intMaxCols);
+
+        if (m + 1 < intMaxRows && n + 1 < intMaxCols)
+            //This moves diagonally and has a similar reasoning as the ones above. 
+            vdFnSearchDiscovery(Pt2Pt2Int_2DArr, stckIntDiscPath, m + 1, n + 1, intMaxRows, intMaxCols);
+    }
+
+    // backtrack: remove the current cell from the stckIntDiscPath
+    stckIntDiscPath.pop();
+}
+

@@ -14,8 +14,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,14 +28,10 @@
               "RelativeDocumentMoniker": "MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
               "ToolTip": "D:\\GitHub\\Data-Structures\\PA3-Assignment4\\MouaJustin_Homework4\\MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
               "RelativeToolTip": "MouaJustin_Homework4\\MouaJustin_Homework4.cpp",
-              "ViewState": "AQIAAGkAAAAAAAAAAAArwHcAAAAAAAAA",
+              "ViewState": "AQIAAL8AAAAAAAAAAAAAAMkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-06T20:35:21.108Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
