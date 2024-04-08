@@ -48,6 +48,7 @@ int main() {
     bool boolQuit = true;
     while (boolQuit) {
 
+        //=================INPUT STARTS HERE=================INPUT STARTS HERE=================INPUT STARTS HERE=================INPUT STARTS HERE=================
         std::string strUsrInp; //Used to store an entire line of input from the user.
 
         //Take user's input
@@ -55,6 +56,7 @@ int main() {
         std::getline(std::cin, strUsrInp);
         std::cout << std::endl;
 
+        //Splits user's input in half (LHS and RHS)
         classCheckUsrInp userInputChecker(strUsrInp);
 
         //if LHS and RHS is not empty.
@@ -66,45 +68,56 @@ int main() {
         else {
             strLHS = userInputChecker.getLHS();
         }
+        //=================INPUT ENDS HERE=================INPUT ENDS HERE=================INPUT ENDS HERE=================INPUT ENDS HERE=================
 
 
+        //==================USER OPTIONS START HERE==================USER OPTIONS START HERE==================USER OPTIONS START HERE==================
         //Option(0) Create
         if ((strLHS == "0") && (!userInputChecker.RHSisEmpty())) {
             std::cout << "Option " << strLHS << " has been selected";
             std::cout << std::endl;
         }
+
         //Option(1) Search
         else if ((strLHS == "1") && (!userInputChecker.RHSisEmpty())) {
             std::cout << "Option " << strLHS << " has been selected";
             std::cout << std::endl;
         }
+
         //Option(2) Breadth-First Traversal
         else if ((strLHS == "2" && userInputChecker.RHSisEmpty())) {
             std::cout << "Option " << strLHS << " has been selected.";
             std::cout << std::endl;
         }
+
         //Option(3) Depth-First Traversal: preorder
         else if ((strLHS == "3" && userInputChecker.RHSisEmpty())) {
             std::cout << "Option " << strLHS << " has been selected.";
             std::cout << std::endl;
         }
+
         //Option(4) Depth-First Traversal: inorder
         else if ((strLHS == "4" && userInputChecker.RHSisEmpty())) {
             std::cout << "Option " << strLHS << " has been selected.";
             std::cout << std::endl;
         }
+
         //Option(5) Depth-First Traversal: postorder
         else if ((strLHS == "5" && userInputChecker.RHSisEmpty())) {
             std::cout << "Option " << strLHS << " has been selected.";
             std::cout << std::endl;
         }
+
         //Option(6) Exit Program
         else if ((strLHS == "6" && userInputChecker.RHSisEmpty())) {
             std::cout << "Click enter to quit the program.";
             std::cout << std::endl;
             break;
         }
-        // Invalid Input
+        //==================USER OPTIONS END HERE==================USER OPTIONS END HERE==================USER OPTIONS END HERE==================
+
+
+        // Invalid Input checker
         else {
             if ((strLHS < "0") || (strLHS > "6")) {
                 std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! You can only enter numbers from 0-6.";
@@ -132,7 +145,7 @@ int main() {
 
         std::cout << std::endl << std::endl;
 
-    }
+    } //end of while loop
 
     std::cout << std::endl << std::endl;
     return 0;
