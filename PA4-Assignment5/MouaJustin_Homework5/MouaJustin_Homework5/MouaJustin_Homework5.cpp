@@ -9,8 +9,60 @@ Description  : Refer to instructions provided by professor.
 
 #include <iostream>
 #include <string>
-#include <sstream>
 
+class classCheckUsrInp {
+
+private:
+    std::string strLHS;
+    std::string strRHS;
+
+public:
+    classCheckUsrInp() {
+        strLHS = "";
+        strRHS = "";
+    }
+    void vdFnSplitUsrInp(std::string inputStr) {
+        int intTempEl = 0;
+        //std::string strLHS; //This is what was causing me the issue! It created a local variant
+        //std::string strRHS;
+
+        // Iterate through the string until a space is found
+        while (inputStr[intTempEl] != ' ') {
+            strLHS = strLHS + inputStr[intTempEl];
+            //std::cout << inputStr[intTempEl]; //Used to check if strRHS was properly founded. DEBUGGER
+            intTempEl++;
+        }
+
+        intTempEl++; //This is to skip the whitespace that it stopped on. Hopefully it works!
+
+        //Starts at the place it left and ends when it reaches the end of the string. 
+        while (intTempEl < inputStr.size()) {
+            strRHS = strRHS + inputStr[intTempEl];
+            //std::cout << inputStr[intTempEl]; //Used to check if strRHS was properly founded. DEBUGGER
+            intTempEl++;
+        }
+
+        //std::cout << "strLHS is: " << strLHS << std::endl;
+        //std::cout << "strRHS is: " << strRHS << std::endl;
+    }
+
+    bool LHSisEmpty() const {
+        return strLHS.empty();
+    }
+    bool RHSisEmpty() const {
+        return strRHS.empty();
+    }
+
+    std::string getLHS() const {
+        return strLHS;
+    }
+
+    std::string getRHS() const {
+        return strRHS;
+    }
+};
+
+/*
 class classCheckUsrInp {
 private:
     std::string strLHS;
@@ -38,115 +90,110 @@ public:
         return strRHS;
     }
 };
+*/
 
 int main() {
 
     std::cout << "\n==============================================================\n\nAssignment: Homework #5\nAuthor of Program: Justin Moua\nProfessor: Pu Cong\nCourse: CS 3353 | Data Structures and Algorithms\n\n==============================================================\n\n";
 
+    std::string strWholeString;
     std::string strLHS;
     std::string strRHS;
-    bool boolQuit = true;
-    while (boolQuit) {
 
-        //=================INPUT STARTS HERE=================INPUT STARTS HERE=================INPUT STARTS HERE=================INPUT STARTS HERE=================
-        std::string strUsrInp; //Used to store an entire line of input from the user.
+    std::string strTempRHSEl;
+    int intTempRHSEl;
 
-        //Take user's input
-        std::cout << "====\nMenu\n====\n\nCreate (0), Search (1), Breadth-First Traversal (2), Depth-First Traversal: preorder (3), inorder (4), postorder (5)\nExit Program (6)\n\nChoose: ";
-        std::getline(std::cin, strUsrInp);
-        std::cout << std::endl;
+    classCheckUsrInp userInputProcessor;
 
-        //Splits user's input in half (LHS and RHS)
-        classCheckUsrInp userInputChecker(strUsrInp);
+    std::cout << "Enter your input here: ";
+    std::getline(std::cin, strWholeString);
+    std::cout << std::endl;
 
-        //if LHS and RHS is not empty.
-        if (!userInputChecker.LHSisEmpty() && !userInputChecker.RHSisEmpty()) {
-            strLHS = userInputChecker.getLHS();
-            strRHS = userInputChecker.getRHS();
-        }
-        //if LHS is not empty but RHS is empty (strRHS will never be empty since iss takes in LHS firstly)
-        else {
-            strLHS = userInputChecker.getLHS();
-        }
-        //=================INPUT ENDS HERE=================INPUT ENDS HERE=================INPUT ENDS HERE=================INPUT ENDS HERE=================
-
-
-        //==================USER OPTIONS START HERE==================USER OPTIONS START HERE==================USER OPTIONS START HERE==================
-        //Option(0) Create
-        if ((strLHS == "0") && (!userInputChecker.RHSisEmpty())) {
-            std::cout << "Option " << strLHS << " has been selected";
-            std::cout << std::endl;
-        }
-
-        //Option(1) Search
-        else if ((strLHS == "1") && (!userInputChecker.RHSisEmpty())) {
-            std::cout << "Option " << strLHS << " has been selected";
-            std::cout << std::endl;
-        }
-
-        //Option(2) Breadth-First Traversal
-        else if ((strLHS == "2" && userInputChecker.RHSisEmpty())) {
-            std::cout << "Option " << strLHS << " has been selected.";
-            std::cout << std::endl;
-        }
-
-        //Option(3) Depth-First Traversal: preorder
-        else if ((strLHS == "3" && userInputChecker.RHSisEmpty())) {
-            std::cout << "Option " << strLHS << " has been selected.";
-            std::cout << std::endl;
-        }
-
-        //Option(4) Depth-First Traversal: inorder
-        else if ((strLHS == "4" && userInputChecker.RHSisEmpty())) {
-            std::cout << "Option " << strLHS << " has been selected.";
-            std::cout << std::endl;
-        }
-
-        //Option(5) Depth-First Traversal: postorder
-        else if ((strLHS == "5" && userInputChecker.RHSisEmpty())) {
-            std::cout << "Option " << strLHS << " has been selected.";
-            std::cout << std::endl;
-        }
-
-        //Option(6) Exit Program
-        else if ((strLHS == "6" && userInputChecker.RHSisEmpty())) {
-            std::cout << "Click enter to quit the program.";
-            std::cout << std::endl;
-            break;
-        }
-        //==================USER OPTIONS END HERE==================USER OPTIONS END HERE==================USER OPTIONS END HERE==================
-
-
-        // Invalid Input checker
-        else {
-            if ((strLHS < "0") || (strLHS > "6")) {
-                std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! You can only enter numbers from 0-6.";
-            }
-            else if (userInputChecker.LHSisEmpty() && userInputChecker.RHSisEmpty()) {
-                std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! Your input was empty.";
-
-            }
-
-            //For option 0 & 1 since they need a LHS and RHS input.
-            else if (userInputChecker.RHSisEmpty()) {
-                std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! Since you chose option " << strLHS << ". You need to have a right handed input that follows a whitespace. Example of correct input where x is another input typed by you: " << strLHS << " x";
-            }
-
-            //For options 2-6 since they DO NOT need a LHS and RHS input.
-            else if (!userInputChecker.RHSisEmpty()) {
-                std::cout << "==============\nInvalid Input!\n==============\n\nPlease try again! Since you chose option " << strLHS << ". You are not supposed to have a right-handed input that follows a whitespace. Example of correct input: " << strLHS;
-            }
-        }
-
-
-        //Resets LHS and RHS of string (Maybe I don't need this because the scope of what LHS and RHS equals stays in the loop)
-        //strLHS = "";
-        //strRHS = "";
-
-        std::cout << std::endl << std::endl;
-
-    } //end of while loop
-
+    std::cout << "Your entire string is: " << strWholeString;
     std::cout << std::endl << std::endl;
+
+    userInputProcessor.vdFnSplitUsrInp(strWholeString);
+    strLHS = userInputProcessor.getLHS();
+    strRHS = userInputProcessor.getRHS();
+
+
+
+    
+    std::cout << "LHS of your string is: " << strLHS;
+    std::cout << std::endl << std::endl;
+
+    std::cout << "RHS of your string is: ";
+
+    //This for loop makes sure that the class we implemented is properly working and splitting the input.
+    for (int i = 0; i < strRHS.size(); i++) {
+        if (i == strRHS.size() - 1) {
+            std::cout << strRHS[i] << ".";
+        }
+        else {
+            std::cout << strRHS[i] << ",";
+        }
+    }
+    
+
+    //Create a temp string for RHS
+    //Concatonate the string with whatever 
+    int arr[3];//Will need to delete this after I implement a queue
+    int arrTemp = 0; //Will need to delete this after I implement a queue
+    for (int i = 0; i < strRHS.size(); i++) {
+
+        //If whitespace is note reached
+        if (strRHS[i] != ' ') {
+            strTempRHSEl = strTempRHSEl + strRHS[i]; //Concats elements of RHS together not including whitespace
+        }
+
+        //when whitespace reached or EOS is reached
+        else {
+            intTempRHSEl = std::stoi(strTempRHSEl); //Convert the concat string to a int 
+            arr[arrTemp] = intTempRHSEl;//Inputs int into a queue since it is FIFO. //Will need to delete this after I implement a queue
+            arrTemp = arrTemp + 1; //Will need to delete this after I implement a queue
+            strTempRHSEl = ""; //resets strTempRHSEl to grab new int
+        }
+
+    }
+
+    intTempRHSEl = std::stoi(strTempRHSEl); //Convert the concat string to a int
+    arr[arrTemp] = intTempRHSEl;//Inputs int into a queue since it is FIFO. //Will need to delete this after I implement a queue
+    arrTemp = arrTemp + 1; //Will need to delete this after I implement a queue
+    strTempRHSEl = ""; //resets strTempRHSEl to grab new int
+
+    //prints out the array just to make sure that it's correct. //Will need to delete this after I implement a queue
+    std::cout << "arrTemp size: " << arrTemp;
+    std::cout << std::endl;
+    for (int i = 0; i < 3; i++) {
+        std::cout << "arr[" << i << "]: " << arr[i];
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    /*
+    //These were created for me to refresh on empty strings. I wanted to check and see if these could recognize
+    //"" or '\0'. are for pure empty inputs.
+    if (strWholeString.empty()) {
+        std::cout << ".empty() says your string is empty!: " << strWholeString;
+        std::cout << std::endl;
+    }
+
+
+    if (strWholeString == "") {
+        std::cout << "strWholeString == "" says your string is empty!: " << strWholeString;
+        std::cout << std::endl;
+    }
+
+    if (strWholeString[0] == '\0') {
+        std::cout << "strWholeString[0] == '\\0' says your string is empty!: " << strWholeString;
+        std::cout << std::endl;
+    }
+
+    if (strWholeString != " ") {
+        std::cout << "strWholeString == " " says your string IS NOT empty!: " << strWholeString;
+        std::cout << std::endl;
+    }
+    */
     return 0;
 }
