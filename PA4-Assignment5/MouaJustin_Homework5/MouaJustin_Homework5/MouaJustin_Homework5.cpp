@@ -207,7 +207,50 @@ public:
         postorder(root);
     }
     //======================DEPTH FIRST TRAVERSAL CONSTRUCTORS=================
+    
+    void deleteByMerging(BSTNode<T>*& node) {
+        BSTNode<T>* tmp = node;
+        if (node != nullptr) {
+            if (!node->right)
+                node = node->left;
+            else if (node->left == nullptr)
+                node = node->right;
+            else {
+                tmp = node->left;
+                while (tmp->right != nullptr)
+                    tmp = tmp->right;
+                tmp->right = node->right;
+                tmp = node;
+                node = node->left;
+            }
+            delete tmp;
+        }
+    }
 
+    void findAndDeleteByMerging(T el) {
+        BSTNode<T>* node = root, * prev = nullptr;
+        while (node != nullptr) {
+            if (node->el == el)
+                break;
+            prev = node;
+            if (el < node->el)
+                node = node->left;
+            else
+                node = node->right;
+        }
+        if (node != nullptr && node->el == el) {
+            if (node == root)
+                deleteByMerging(root);
+            else if (prev->left == node)
+                deleteByMerging(prev->left);
+            else
+                deleteByMerging(prev->right);
+        }
+        else if (root != nullptr)
+            std::cout << "Element " << el << " is not in the tree\n";
+        else
+            std::cout << "The tree is empty\n";
+    }
 };
 
 int main() {
@@ -231,7 +274,7 @@ int main() {
         std::cout << std::endl << std::endl;
         std::cout << "Choose? ";
         std::getline(std::cin, strWholeString);
-        std::cout << std::endl;
+
 
 
         //std::cout << "Your entire string is: " << strWholeString; //DEBUGGER
@@ -320,48 +363,48 @@ int main() {
             }
             //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
 
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl;
         }
         else if (strLHS == "1") {
             int intRHS = std::stoi(strRHS);
 
             if (tree.search(intRHS)) {
-                std::cout << "Value " << intRHS << " FOUNDED in the BST." << std::endl;
+                std::cout << "Value " << intRHS << " FOUNDED in the BST.";
             }
             else {
-                std::cout << "Value " << intRHS << " NOT FOUNDED in the BST." << std::endl;
+                std::cout << "Value " << intRHS << " NOT FOUNDED in the BST.";
             }
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl << std::endl << std::endl;
 
         }
 
         else if (strLHS == "2") {
             tree.breadthFirstTraversal();
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl << std::endl << std::endl;
         }
 
         else if (strLHS == "3") {
             tree.vdFnPreorderConstructor();
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl << std::endl << std::endl;
         }
 
         else if (strLHS == "4") {
             tree.vdFnInorderConstructor();
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl << std::endl << std::endl;
         }
 
         else if (strLHS == "5") {
             tree.vdFnPostorderConstructor();
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl << std::endl << std::endl;
         }
 
         else if (strLHS == "6") {
             std::cout << "You chose option #" << strLHS << " and thus the program will quit.";
-            std::cout << std::endl << std::endl;
+            std::cout << std::endl << std::endl << std::endl;
             break;
         }
         //===============OPTION SELECTION ENDS HERE===============OPTION SELECTION ENDS HERE===============OPTION SELECTION ENDS HERE===============
-        
+
         /*
         //These were created for me to refresh on empty strings. I wanted to check and see if these could recognize
         //"" or '\0'. are for pure empty inputs.
