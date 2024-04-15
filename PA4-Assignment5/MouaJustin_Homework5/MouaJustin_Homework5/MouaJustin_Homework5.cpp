@@ -10,6 +10,10 @@ Description  : Refer to instructions provided by professor.
 #include <iostream>
 #include <string>
 #include <queue>
+#include <stack>
+
+using namespace std;
+
 class classCheckUsrInp {
 
 private:
@@ -77,12 +81,132 @@ public:
     }
 };
 
+template<class T>
+class BSTNode {
+public:
+    BSTNode() {
+        left = right = nullptr;
+    }
+    BSTNode(const T& e, BSTNode<T>* l = nullptr, BSTNode<T>* r = nullptr) {
+        el = e; left = l; right = r;
+    }
+    T el;
+    BSTNode<T>* left, * right;
+};
+
+template<class T>
+class BST {
+private:
+    BSTNode<T>* root;
+
+    // Helper function for insertion
+    BSTNode<T>* insert(BSTNode<T>* node, const T& value) {
+        if (node == nullptr)
+            return new BSTNode<T>(value);
+
+        if (value < node->el)
+            node->left = insert(node->left, value);
+        else if (value > node->el)
+            node->right = insert(node->right, value);
+
+        return node;
+    }
+
+    // Helper function for searching
+    bool search(BSTNode<T>* node, const T& value) {
+        if (node == nullptr)
+            return false;
+
+        if (node->el == value)
+            return true;
+        else if (value < node->el)
+            return search(node->left, value);
+        else
+            return search(node->right, value);
+    }
+
+    // Helper function for Preorder traversal
+    void preorder(BSTNode<T>* node) {
+        if (node != nullptr) {
+            std::cout << node->el << " ";
+            preorder(node->left);
+            preorder(node->right);
+        }
+    }
+
+    // Helper function for Inorder traversal
+    void inorder(BSTNode<T>* node) {
+        if (node != nullptr) {
+            inorder(node->left);
+            std::cout << node->el << " ";
+            inorder(node->right);
+        }
+    }
+
+    // Helper function for Postorder traversal
+    void postorder(BSTNode<T>* node) {
+        if (node != nullptr) {
+            postorder(node->left);
+            postorder(node->right);
+            std::cout << node->el << " ";
+        }
+    }
+
+public:
+    BST() {
+        root = nullptr;
+    }
+
+    // Insertion
+    void insert(const T& value) {
+        root = insert(root, value);
+    }
+
+    // Searching
+    bool search(const T& value) {
+        return search(root, value);
+    }
+
+    // Breadth First Traversal
+    void breadthFirstTraversal() {
+        if (root == nullptr)
+            return;
+
+        std::queue<BSTNode<T>*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            BSTNode<T>* node = q.front();
+            q.pop();
+            std::cout << node->el << " ";
+
+            if (node->left != nullptr)
+                q.push(node->left);
+            if (node->right != nullptr)
+                q.push(node->right);
+        }
+    }
+
+    // Depth First Traversal (Preorder)
+    void preorderTraversal() {
+        preorder(root);
+    }
+
+    // Depth First Traversal (Inorder)
+    void inorderTraversal() {
+        inorder(root);
+    }
+
+    // Depth First Traversal (Postorder)
+    void postorderTraversal() {
+        postorder(root);
+    }
+};
 
 int main() {
 
     std::cout << "\n==============================================================\n\nAssignment: Homework #5\nAuthor of Program: Justin Moua\nProfessor: Pu Cong\nCourse: CS 3353 | Data Structures and Algorithms\n\n==============================================================\n\n";
-
-    //Maybe this is where I will put the BST Tree object so that it's scope is the entire main function. 
+    BST<int> tree;
 
     while (true) {
         std::string strWholeString;
@@ -91,7 +215,7 @@ int main() {
 
         std::string strTempRHSEl; //Used to temporarily store an element of the original RHS input
         int intTempRHSEl; //Used to temporarily store strTempRHSEl. It takes the stoi of strTempRHSEl. 
-
+            
         std::queue<int> myQueue; //Used for option 0. 
 
         classCheckUsrInp userInputProcessor; //Used to split the user's input in half. 
@@ -169,33 +293,35 @@ int main() {
             //for when I have reached the last bit of concatenated characters.
             //So instead I copy and pasted the same code and put it below.
             */
+            //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
             intTempRHSEl = std::stoi(strTempRHSEl); //Convert the concat string to a int
             myQueue.push(intTempRHSEl);
             strTempRHSEl = ""; //resets strTempRHSEl to grab new int
 
             std::cout << "Your RHS in a queue: ";
             std::cout << std::endl << std::endl;
-            // Dequeue elements from the queue and display them
+            // pop elements from the queue and display them
             while (!myQueue.empty()) {
                 std::cout << "Dequeuing: " << myQueue.front() << std::endl;
+
+                tree.insert(myQueue.front());
+
                 myQueue.pop();
             }
+            //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
 
             std::cout << std::endl << std::endl;
         }
         else if (strLHS == "1") {
-            //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
-            intTempRHSEl = std::stoi(strRHS); //Convert the concat string to a 
-            myQueue.push(intTempRHSEl);
-            std::cout << "You chose option #" << strLHS;
-            std::cout << std::endl;
+            int intRHS = std::stoi(strRHS);
 
-            while (!myQueue.empty()) {
-                std::cout << "Dequeuing: " << myQueue.front() << std::endl;
-                myQueue.pop();
+            if (tree.search(intRHS)) {
+                std::cout << "Value " << intRHS << " found in the BST." << std::endl;
+            }
+            else {
+                std::cout << "Value " << intRHS << " not found in the BST." << std::endl;
             }
             std::cout << std::endl << std::endl;
-            //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
         
 
             //Use the queue to build a tree (might need to create an object of a Binary Tree instance or something)
@@ -203,23 +329,19 @@ int main() {
         }
 
         else if (strLHS == "2") {
-            std::cout << "You chose option #" << strLHS;
-            std::cout << std::endl;
+            tree.breadthFirstTraversal();
         }
 
         else if (strLHS == "3") {
-            std::cout << "You chose option #" << strLHS;
-            std::cout << std::endl;
+            tree.preorderTraversal();
         }
 
         else if (strLHS == "4") {
-            std::cout << "You chose option #" << strLHS;
-            std::cout << std::endl;
+            tree.inorderTraversal();
         }
 
         else if (strLHS == "5") {
-            std::cout << "You chose option #" << strLHS;
-            std::cout << std::endl;
+            tree.postorderTraversal();
         }
 
         else if (strLHS == "6") {
