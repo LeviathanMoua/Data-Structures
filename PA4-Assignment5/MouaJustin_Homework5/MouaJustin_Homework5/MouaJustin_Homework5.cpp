@@ -32,7 +32,7 @@ public:
         //Checks to see if the string is empty or not. 
         if (inputStr.length() != 0) {
 
-            
+
             // Iterate through the string until a space is found or EOL.
             while (true) {
                 if (inputStr[intTempEl] == ' ' || inputStr[intTempEl] == '\0') {
@@ -65,18 +65,18 @@ public:
         //std::cout << "strRHS is: " << strRHS << std::endl;
     }
 
-    bool LHSisEmpty() const {
+    bool LHSisEmpty() {
         return strLHS.empty();
     }
-    bool RHSisEmpty() const {
+    bool RHSisEmpty() {
         return strRHS.empty();
     }
 
-    std::string getLHS() const {
+    std::string getLHS() {
         return strLHS;
     }
 
-    std::string getRHS() const {
+    std::string getRHS() {
         return strRHS;
     }
 };
@@ -99,108 +99,115 @@ class BST {
 private:
     BSTNode<T>* root;
 
-    // Helper function for insertion
-    BSTNode<T>* insert(BSTNode<T>* node, const T& value) {
-        if (node == nullptr)
+    //Insertion - Option 0
+    BSTNode<T>* insert(BSTNode<T>* ptr, T value) {
+        if (ptr == nullptr)
             return new BSTNode<T>(value);
 
-        if (value < node->el)
-            node->left = insert(node->left, value);
-        else if (value > node->el)
-            node->right = insert(node->right, value);
+        if (value < ptr->el)
+            ptr->left = insert(ptr->left, value);
+        else if (value > ptr->el)
+            ptr->right = insert(ptr->right, value);
 
-        return node;
+        return ptr;
     }
 
-    // Helper function for searching
-    bool search(BSTNode<T>* node, const T& value) {
-        if (node == nullptr)
+    //Search - Option 1
+    bool search(BSTNode<T>* ptr, T value) {
+        if (ptr == nullptr)
             return false;
 
-        if (node->el == value)
+        if (ptr->el == value)
             return true;
-        else if (value < node->el)
-            return search(node->left, value);
+        else if (value < ptr->el)
+            return search(ptr->left, value);
         else
-            return search(node->right, value);
+            return search(ptr->right, value);
     }
 
-    // Helper function for Preorder traversal
-    void preorder(BSTNode<T>* node) {
-        if (node != nullptr) {
-            std::cout << node->el << " ";
-            preorder(node->left);
-            preorder(node->right);
-        }
-    }
 
-    // Helper function for Inorder traversal
-    void inorder(BSTNode<T>* node) {
-        if (node != nullptr) {
-            inorder(node->left);
-            std::cout << node->el << " ";
-            inorder(node->right);
-        }
-    }
-
-    // Helper function for Postorder traversal
-    void postorder(BSTNode<T>* node) {
-        if (node != nullptr) {
-            postorder(node->left);
-            postorder(node->right);
-            std::cout << node->el << " ";
-        }
-    }
 
 public:
     BST() {
         root = nullptr;
     }
 
-    // Insertion
-    void insert(const T& value) {
+    // Insertion Constructor - Option 0
+    void insert(T value) {
         root = insert(root, value);
     }
 
-    // Searching
-    bool search(const T& value) {
+    // Search Constructor- Option 1
+    bool search(T value) {
         return search(root, value);
     }
 
-    // Breadth First Traversal
+    // Breadth First Traversal - Option 2
     void breadthFirstTraversal() {
         if (root == nullptr)
             return;
 
-        std::queue<BSTNode<T>*> q;
-        q.push(root);
+        std::queue<BSTNode<T>*> ptrToBSTNodeQueue;
+        ptrToBSTNodeQueue.push(root);
 
-        while (!q.empty()) {
-            BSTNode<T>* node = q.front();
-            q.pop();
-            std::cout << node->el << " ";
+        while (!ptrToBSTNodeQueue.empty()) {
+            BSTNode<T>* ptr = ptrToBSTNodeQueue.front();
+            ptrToBSTNodeQueue.pop();
+            std::cout << ptr->el << " ";
 
-            if (node->left != nullptr)
-                q.push(node->left);
-            if (node->right != nullptr)
-                q.push(node->right);
+            if (ptr->left != nullptr)
+                ptrToBSTNodeQueue.push(ptr->left);
+            if (ptr->right != nullptr)
+                ptrToBSTNodeQueue.push(ptr->right);
         }
     }
 
-    // Depth First Traversal (Preorder)
-    void preorderTraversal() {
+    //======================DEPTH FIRST TRAVERSAL FUNCTIONS=================
+    //DFT Preorder - Option 3
+    void preorder(BSTNode<T>* ptr) {
+        if (ptr != nullptr) {
+            std::cout << ptr->el << " ";
+            preorder(ptr->left);
+            preorder(ptr->right);
+        }
+    }
+
+    //Inorder - Option 4
+    void inorder(BSTNode<T>* ptr) {
+        if (ptr != nullptr) {
+            inorder(ptr->left);
+            std::cout << ptr->el << " ";
+            inorder(ptr->right);
+        }
+    }
+
+    //Postorder - Option 5
+    void postorder(BSTNode<T>* ptr) {
+        if (ptr != nullptr) {
+            postorder(ptr->left);
+            postorder(ptr->right);
+            std::cout << ptr->el << " ";
+        }
+    }
+    //======================DEPTH FIRST TRAVERSAL FUNCTIONS=================
+
+    //======================DEPTH FIRST TRAVERSAL CONSTRUCTORS=================
+    //DFT Preorder Constructor - Option 3
+    void vdFnPreorderConstructor() {
         preorder(root);
     }
 
-    // Depth First Traversal (Inorder)
-    void inorderTraversal() {
+    //DFT Inorder Constructor - Option 4
+    void vdFnInorderConstructor() {
         inorder(root);
     }
 
-    // Depth First Traversal (Postorder)
-    void postorderTraversal() {
+    //DFT Postorder Constructor - Option 5
+    void vdFnPostorderConstructor() {
         postorder(root);
     }
+    //======================DEPTH FIRST TRAVERSAL CONSTRUCTORS=================
+
 };
 
 int main() {
@@ -215,7 +222,7 @@ int main() {
 
         std::string strTempRHSEl; //Used to temporarily store an element of the original RHS input
         int intTempRHSEl; //Used to temporarily store strTempRHSEl. It takes the stoi of strTempRHSEl. 
-            
+
         std::queue<int> myQueue; //Used for option 0. 
 
         classCheckUsrInp userInputProcessor; //Used to split the user's input in half. 
@@ -232,11 +239,12 @@ int main() {
 
         userInputProcessor.vdFnSplitUsrInp(strWholeString);
 
+        //If the user's LHS and RHS is not empty
         if (!userInputProcessor.LHSisEmpty() && !userInputProcessor.RHSisEmpty()) {
             strLHS = userInputProcessor.getLHS();
             strRHS = userInputProcessor.getRHS();
 
-            /*
+            /* //Debugger
             std::cout << "LHS of your string is: " << strLHS;
             std::cout << std::endl << std::endl;
 
@@ -253,11 +261,12 @@ int main() {
             }
             */
         }
+        //If the user's lhs is not empty but the rhs is empty
         else if (!userInputProcessor.LHSisEmpty() && userInputProcessor.RHSisEmpty()) {
             strLHS = userInputProcessor.getLHS();
         }
 
-
+        //===============OPTION SELECTION STARTS HERE===============OPTION SELECTION STARTS HERE===============OPTION SELECTION STARTS HERE===============
         if (strLHS == "0") {
             //Create a temp string for RHS
             //Concatonate the string with whatever 
@@ -277,36 +286,37 @@ int main() {
 
             }
             /*
-            //I wouldn't need these 3 lines of code below if I could figure out
-            //why the else function in the for loop above is not executing for
-            // the last "element" of the string. For example,
-            //the for loop above does the following:
-            //Loop through strRHS which contains a string input of a list of numbers such as
-            //12 3 4. I wanted to put each number individually into a queue
-            //so I parsed through each CHARACTER in the string.
-            //I parse and concat the characters together with a temporary string
-            //variable until I reach a whitespace. Once the whitespace is reached,
-            //then I can turn that temp string into a temp int var
-            //then I can push the temp int var into the queue
-            //and reset both the temp variables.
-            //Unfortunately though, this does not work
-            //for when I have reached the last bit of concatenated characters.
-            //So instead I copy and pasted the same code and put it below.
+            Note to self: I wouldn't need these 3 lines of code below if I could figure out
+            why the else function in the for loop above is not executing for
+             the last "element" of the string. For example,
+            the for loop above does the following:
+            Loop through strRHS which contains a string input of a list of numbers such as
+            12 3 4. I wanted to put each number individually into a queue
+            so I parsed through each CHARACTER in the string.
+            I parse and concat the characters together with a temporary string
+            variable until I reach a whitespace. Once the whitespace is reached,
+            then I can turn that temp string into a temp int var
+            then I can push the temp int var into the queue
+            and reset both the temp variables.
+            Unfortunately though, this does not work
+            for when I have reached the last bit of concatenated characters.
+            So instead I copy and pasted the same code and put it below.
             */
+
             //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
             intTempRHSEl = std::stoi(strTempRHSEl); //Convert the concat string to a int
             myQueue.push(intTempRHSEl);
             strTempRHSEl = ""; //resets strTempRHSEl to grab new int
 
-            std::cout << "Your RHS in a queue: ";
-            std::cout << std::endl << std::endl;
+            //std::cout << "Your RHS in a queue: "; //used for debugging
+            //std::cout << std::endl << std::endl; //used for debugging
             // pop elements from the queue and display them
             while (!myQueue.empty()) {
-                std::cout << "Dequeuing: " << myQueue.front() << std::endl;
+                //std::cout << "Dequeuing: " << myQueue.front() << std::endl; //used to debug and make sure that what is dequeueing is correct!
 
-                tree.insert(myQueue.front());
+                tree.insert(myQueue.front()); //inserts what is in the fron tof hte queue to the tree
 
-                myQueue.pop();
+                myQueue.pop(); //pops the queue. 
             }
             //====================PUSHING USER INPUTTED LIST INTO QUEUE====================PUSHING USER INPUTTED LIST INTO QUEUE====================
 
@@ -316,40 +326,42 @@ int main() {
             int intRHS = std::stoi(strRHS);
 
             if (tree.search(intRHS)) {
-                std::cout << "Value " << intRHS << " found in the BST." << std::endl;
+                std::cout << "Value " << intRHS << " FOUNDED in the BST." << std::endl;
             }
             else {
-                std::cout << "Value " << intRHS << " not found in the BST." << std::endl;
+                std::cout << "Value " << intRHS << " NOT FOUNDED in the BST." << std::endl;
             }
             std::cout << std::endl << std::endl;
-        
-
-            //Use the queue to build a tree (might need to create an object of a Binary Tree instance or something)
 
         }
 
         else if (strLHS == "2") {
             tree.breadthFirstTraversal();
+            std::cout << std::endl << std::endl;
         }
 
         else if (strLHS == "3") {
-            tree.preorderTraversal();
+            tree.vdFnPreorderConstructor();
+            std::cout << std::endl << std::endl;
         }
 
         else if (strLHS == "4") {
-            tree.inorderTraversal();
+            tree.vdFnInorderConstructor();
+            std::cout << std::endl << std::endl;
         }
 
         else if (strLHS == "5") {
-            tree.postorderTraversal();
+            tree.vdFnPostorderConstructor();
+            std::cout << std::endl << std::endl;
         }
 
         else if (strLHS == "6") {
             std::cout << "You chose option #" << strLHS << " and thus the program will quit.";
-            std::cout << std::endl;
+            std::cout << std::endl << std::endl;
             break;
         }
-
+        //===============OPTION SELECTION ENDS HERE===============OPTION SELECTION ENDS HERE===============OPTION SELECTION ENDS HERE===============
+        
         /*
         //These were created for me to refresh on empty strings. I wanted to check and see if these could recognize
         //"" or '\0'. are for pure empty inputs.
